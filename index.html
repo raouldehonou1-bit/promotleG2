@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terminale G2 • Quiz Sciences de Gestion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- BACKGROUND -->
+  <div class="bg-mesh" aria-hidden="true"></div>
+  <div class="particles" id="particles" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════
+       HEADER — fixe en haut de page
+  ═══════════════════════════════════ -->
+  <header id="site-header">
+    <div class="header-brand">
+      <span class="header-dot"></span>
+      <div>
+        <div class="header-title">Terminale G2</div>
+        <div class="header-sub">Sciences de Gestion</div>
+      </div>
+    </div>
+    <div class="header-year">2022 – 2023</div>
+  </header>
+
+  <!-- ═══════════════════════════════════
+       SCREEN 1 — Accueil & Identification
+  ═══════════════════════════════════ -->
+  
+  <section class="screen active" id="screen-welcome" aria-label="Accueil">
+    <div class="wrapper">
+
+      <span class="pill-tag">🎓 Quiz de Promotion Terminale G2</span>
+
+      <h1 class="hero-title">T'es prêt à<br>relever le défi ?</h1>
+      <p class="hero-sub">
+        Un quiz exclusif réservé à la Terminale G2. Teste tes connaissances,
+        gagne des points et découvre une belle surprise à la fin&nbsp;👀
+      </p>
+
+      <div class="stats-row" role="list">
+        <div class="stat-card" role="listitem">
+          <span class="stat-num">50</span>
+          <span class="stat-lbl">Questions au total</span>
+        </div>
+        <div class="stat-card" role="listitem">
+          <span class="stat-num">🎯</span>
+          <span class="stat-lbl">Palier & Bonus</span>
+        </div>
+        <div class="stat-card" role="listitem">
+          <span class="stat-num">🔥</span>
+          <span class="stat-lbl">Spécial G2 & Potins</span>
+        </div>
+      </div>
+
+      <p class="select-label" id="select-label">Sélectionne ton prénom</p>
+      <div class="select-wrap">
+        <select id="name-select" aria-labelledby="select-label" aria-required="true">
+          <option value="">— Choisir mon nom —</option>
+          </select>
+      </div>
+
+      <div id="custom-name-container" style="display: none; margin-top: 15px; margin-bottom: 20px; text-align: left;">
+        <label for="custom-name-input" style="display: block; margin-bottom: 8px; font-weight: bold; font-size: 14px; color: #f59e0b;">
+          ✍️ Ton prénom n'est pas dans la liste ? Tape-le ici :
+        </label>
+        <input type="text" id="custom-name-input" placeholder="Ex: Jean, Falilou, Christiane..." 
+               style="width: 100%; padding: 14px; border-radius: 12px; background: #1e1e2f; color: #fff; border: 1px solid #7c3aed; box-sizing: border-box; font-size: 16px;">
+      </div>
+
+      <button class="btn btn-primary" id="start-btn" disabled aria-disabled="true">
+        🚀 Lancer le défi
+      </button>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SCREEN 2 — Quiz interactif
+  ═══════════════════════════════════ -->
+  <section class="screen" id="screen-quiz" aria-label="Quiz" aria-live="polite">
+    <div class="wrapper">
+
+      <!-- Barre de statut joueur / score -->
+      <div class="quiz-header">
+        <div class="player-chip">
+          <div class="player-avatar" id="avatar-letter" aria-hidden="true">?</div>
+          <span id="player-name-chip">Joueur</span>
+        </div>
+        <div class="score-chip">
+          ⭐&nbsp;<span id="score-display">0</span>&nbsp;pts
+        </div>
+      </div>
+
+      <!-- Barre de progression -->
+      <div class="progress-info" aria-label="Progression">
+        <span id="progress-label">Question 1 / 10</span>
+        <span id="progress-pct">0 %</span>
+      </div>
+      <div class="progress-bar-bg" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="progress-bar-role">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+      </div>
+
+      <!-- Carte question -->
+      <div class="question-card" id="question-card">
+        <div class="q-num"   id="q-num">Question 01</div>
+        <div class="q-text"  id="q-text">Chargement…</div>
+      </div>
+
+      <!-- Toast feedback -->
+      <div class="feedback-toast" id="feedback-toast" role="alert" aria-live="assertive"></div>
+
+      <!-- Grille des 4 options -->
+      <div class="options-grid" id="options-grid" role="group" aria-label="Propositions de réponse">
+        <!-- Boutons injectés par script.js -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       SCREEN 3 — Verdict & Portfolio
+  ═══════════════════════════════════ -->
+  <section class="screen" id="screen-result" aria-label="Résultats">
+    <div class="wrapper">
+
+      <!-- Anneau de score -->
+      <div class="verdict-hero">
+        <div class="score-ring-wrap">
+          <div class="score-ring" id="score-ring" aria-hidden="true">
+            <div class="score-ring-inner">
+              <span class="score-big"  id="final-score-num">0/10</span>
+              <span class="score-total">score final</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="verdict-badge" id="verdict-badge" role="status"></div>
+        <p  class="verdict-msg"   id="verdict-msg"></p>
+
+        <!-- Actions -->
+        <div class="actions-row">
+          <button class="btn btn-green" id="wa-btn">
+            💬 Partager sur WhatsApp
+          </button>
+          <button class="btn btn-outline" id="retry-btn">
+            🔄 Rejouer
+          </button>
+        </div>
+      </div>
+
+      <!-- ── Carte vitrine développeur ── -->
+      <div class="dev-card" id="dev-card" aria-label="Présentation du développeur">
+        <span class="dev-card-tag">✨ La Surprise du Développeur</span>
+
+        <div class="dev-profile">
+          <div class="dev-avatar" aria-hidden="true">RD</div>
+          <div>
+            <div class="dev-name">Raoul DEHONOU</div>
+            <div class="dev-role">Développeur Web · Informatique de Gestion</div>
+          </div>
+        </div>
+
+        <p class="dev-bio">
+          Ce quiz que vous venez de faire ? C'est <strong>moi</strong> qui l'ai conçu et développé
+          depuis zéro — HTML, CSS, JavaScript, logique de quiz, animations… tout.
+          Ancien élève de la <strong>G2</strong>, je me suis lancé en Informatique de Gestion
+          après le Bac et c'est cette passion pour le <strong>développement web</strong>
+          que je voulais partager avec vous aujourd'hui.&nbsp;🎉
+        </p>
+
+        <div class="skills-row" aria-label="Compétences">
+          <span class="skill-tag">HTML5</span>
+          <span class="skill-tag">CSS3</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">React</span>
+          <span class="skill-tag">UI Design</span>
+          <span class="skill-tag">Netlify</span>
+        </div>
+
+        <button class="btn btn-gold" id="portfolio-btn">
+          🌐 Visiter mon Portfolio
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       FOOTER — fixe en bas
+  ═══════════════════════════════════ -->
+  <footer id="site-footer">
+    <span class="footer-promo">Terminale G2 &bull; Sciences de Gestion</span>
+    <span class="footer-sep">·</span>
+    Conçu par <span class="footer-author">Raoul DEHONOU</span>
+    <span class="footer-sep">·</span>
+    Informatique de Gestion · Développeur Web
+  </footer>
+
+  <!-- Script principal (chargé en dernier pour accès au DOM) -->
+  <script src="js/main.js"></script>
+</body>
+</html>

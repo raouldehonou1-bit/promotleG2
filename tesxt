@@ -1,0 +1,85 @@
+<section class="screen active" id="screen-welcome" aria-label="Accueil">
+    <div class="wrapper">
+
+      <span class="pill-tag">🎓 Quiz de Promotion Terminale G2</span>
+
+      <h1 class="hero-title">T'es prêt à<br>relever le défi ?</h1>
+      <p class="hero-sub">
+        Un quiz exclusif réservé à la Terminale G2. Teste tes connaissances,
+        gagne des points et découvre une belle surprise à la fin&nbsp;👀
+      </p>
+
+      <!-- Statistiques rapides -->
+      <div class="stats-row" role="list">
+        <div class="stat-card" role="listitem">
+          <span class="stat-num">50</span>
+          <span class="stat-lbl">Questions au total</span>
+        </div>
+        <div class="stat-card" role="listitem">
+          <span class="stat-num">🎯</span>
+          <span class="stat-lbl">Palier & Bonus</span>
+        </div>
+        <div class="stat-card" role="listitem">
+          <span class="stat-num">🔥</span>
+          <span class="stat-lbl">Spécial G2 & Potins</span>
+        </div>
+      </div>
+
+      <!-- Sélection du joueur -->
+      <p class="select-label" id="select-label">Sélectionne ton prénom</p>
+      <div class="select-wrap">
+        <select id="name-select" aria-labelledby="select-label" aria-required="true">
+          <option value="">— Choisir mon nom —</option>
+          <!-- Rempli dynamiquement par script.js via DATA.players -->
+        </select>
+      </div>
+
+      <button class="btn btn-primary" id="start-btn" disabled aria-disabled="true">
+        🚀 Lancer le défi
+      </button>
+
+    </div>
+  </section>
+
+
+  /** Peuple le <select> avec la liste des joueurs depuis DATA.players */
+function buildPlayerSelect() {
+  const select  = document.getElementById('name-select');
+  const startBtn = document.getElementById('start-btn');
+
+  // Injecter les options
+  DATA.players
+    .slice()                  // copie pour ne pas muter le tableau source
+    .sort()                   // tri alphabétique
+    .forEach(name => {
+      const opt    = document.createElement('option');
+      opt.value    = name;
+      opt.textContent = name;
+      select.appendChild(opt);
+    });
+
+  // Activer / désactiver le bouton selon la sélection
+  select.addEventListener('change', () => {
+    const hasValue = select.value !== '';
+    startBtn.disabled    = !hasValue;
+    startBtn.setAttribute('aria-disabled', String(!hasValue));
+  });
+
+  // Lancer le quiz au clic du bouton
+  startBtn.addEventListener('click', () => {
+    if (!startBtn.disabled) launchQuiz(select.value);
+  });
+}
+
+/** Démarre le quiz avec le prénom choisi */
+function launchQuiz(name) {
+  resetState();
+  STATE.playerName = name;
+
+  // Mettre à jour l'interface du quiz
+  document.getElementById('avatar-letter').textContent  = name[0].toUpperCase();
+  document.getElementById('player-name-chip').textContent = name;
+
+  showScreen('screen-quiz');
+  renderQuestion();
+}
